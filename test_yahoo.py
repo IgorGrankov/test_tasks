@@ -37,7 +37,7 @@ class YahooTest(unittest.TestCase):
                 EC.presence_of_element_located((By.CLASS_NAME, "fptoday-img")))
             end = time.time()
             load_time = end - start
-            self.assertTrue(load_time, 7)
+            self.assertTrue(load_time < 7)
             ff.quit()
 
     def tearDown(self):
