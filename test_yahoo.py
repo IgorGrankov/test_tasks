@@ -4,13 +4,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from datetime import datetime
+import time
 
 
 class YahooTest(unittest.TestCase):
-    links = []
 
     def setUp(self):
+        self.links = []
         self.browser = webdriver.Firefox()
         self.browser.get("http://www.yahoo.com")
         self.browser.set_window_size(1280, 800)
@@ -30,12 +30,12 @@ class YahooTest(unittest.TestCase):
             self.links.append(item.get_attribute('href'))
 
         for link in self.links:
-            start = datetime.now()
+            start = time.time()
             ff = webdriver.Firefox()
             ff.get(link)
             WebDriverWait(self.browser, 10).until(
                 EC.presence_of_element_located((By.CLASS_NAME, "fptoday-img")))
-            end = datetime.now()
+            end = time.time()
             load_time = end - start
             self.assertTrue(load_time, 7)
             ff.quit()
