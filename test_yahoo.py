@@ -15,7 +15,7 @@ class YahooTest(unittest.TestCase):
         self.browser.get("http://www.yahoo.com")
         self.browser.set_window_size(1280, 800)
 
-    def test_get_links(self):
+    def get_dropdown_urls(self):
         more = self.browser.find_element(By.ID, 'uh-more-link')
         more_button = self.browser.find_element_by_class_name('more-link')
         actions = ActionChains(self.browser)
@@ -25,10 +25,12 @@ class YahooTest(unittest.TestCase):
 
         items = self.browser.find_elements(By.XPATH,
                                            '//*[@id="uh-more-link"]/ul/li/a')
-
         for item in items:
             self.links.append(item.get_attribute('href'))
+        return self.links
 
+    def test_get_links(self):
+        self.get_dropdown_urls()
         for link in self.links:
             start = time.time()
             ff = webdriver.Firefox()
@@ -42,7 +44,6 @@ class YahooTest(unittest.TestCase):
 
     def tearDown(self):
         self.browser.quit()
-
 
 if __name__ == "__main__":
     unittest.main()
