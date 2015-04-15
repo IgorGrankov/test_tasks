@@ -84,10 +84,13 @@ class Test(unittest.TestCase):
         # Fill form and click submit
         self.login.fill_login_form()
         self.login.click_submit()
+        exit_link = self.browser.find_element_by_xpath(
+            "//*[text()[contains(.,'Exit')]]")
 
         # Assert that exit link appears
         # BTW login & registration should be hidden - it is a bug,
         # but I didn't cover it
+        self.assertTrue(exit_link.is_displayed())
 
     def tearDown(self):
         self.browser.close()
